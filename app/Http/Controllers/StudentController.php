@@ -9,7 +9,7 @@ class StudentController extends Controller
 {
     public function index()
     {
-        $students = Student::all();
+        $student = Student::all();
         return view('students.index', compact('students'));
     }
 
@@ -30,6 +30,8 @@ class StudentController extends Controller
             'name' => 'required|string|max:255',
             'department' => 'required|string|max:255',
             'mobile' => 'required|string|max:15',
+            'gender' => 'required',
+            'skill' => 'nullable|array',
         ]);
 
         // Find the student and update details
@@ -38,6 +40,8 @@ class StudentController extends Controller
             'name' => $request->input('name'),
             'department' => $request->input('department'),
             'mobile' => $request->input('mobile'),
+            'gender' => $request->input('gender'),
+            'skill' => implode(',', $request->input('skill', [])), // Convert array to string
         ]);
 
         // Redirect back with success message
@@ -54,20 +58,23 @@ public function destroy($id)
 }
 
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'department' => 'required',
-            'mobile' => 'required'
-        ]);
+public function store(Request $request)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'department' => 'required|string|max:255',
+        'gender' => 'required',
+        'skill' => 'nullable|array',
+    ]);
 
-        Student::create([
-            'name' => $request->name,
-            'department' => $request->department,
-            'mobile' => $request->mobile
-        ]);
+    Student::create([
+        'name' => $request->name,
+        'department' => $request->department,
+        'gender' => $request->gender,
+        'skill' => implode(',', $request->skill ?? []), // Convert array to string
+    ]);    
 
-        return redirect()->route('students.index')->with('success', 'Student added successfully.');
-    }
+    return redirect()->route('students.index')->with('success', 'Student added successfully!');
+}
+
 }
