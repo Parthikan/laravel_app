@@ -11,8 +11,9 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('department');
-            $table->string('mobile');
-            $table->timestamps();
+            $table->string('gender');
+            $table->text('skill')->nullable();
+            $table->timestamps(); // This creates 'created_at' and 'updated_at'
         });
     }
 
