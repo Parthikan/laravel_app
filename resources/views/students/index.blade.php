@@ -20,7 +20,7 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
+resources\views\students            <tbody>
                 @foreach ($students as $student)
                     <tr>
                         <td>{{ $student->id }}</td>
