@@ -15,7 +15,8 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Department</th>
-                    <th>Mobile</th>
+                    <th>Gender</th>
+                    <th>Skills</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -25,7 +26,8 @@
                         <td>{{ $student->id }}</td>
                         <td>{{ $student->name }}</td>
                         <td>{{ $student->department }}</td>
-                        <td>{{ $student->mobile }}</td>
+                        <td>{{ $student->gender }}</td>
+                        <td>{{ $student->skill }}</td> <!-- Displaying skills -->
                         <td>
                             <a href="{{ route('students.edit', $student->id) }}" class="btn btn-warning btn-sm">Edit</a>
                             <form action="{{ route('students.destroy', $student->id) }}" method="POST" style="display:inline;">
