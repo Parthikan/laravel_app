@@ -68,19 +68,20 @@ public function store(Request $request)
     $request->validate([
         'name' => 'required|string|max:255',
         'department' => 'required|string|max:255',
-        'gender' => 'required', // Ensure this is present
+        'gender' => 'required',
         'skill' => 'nullable|array',
     ]);
 
     Student::create([
         'name' => $request->name,
         'department' => $request->department,
-        'gender' => $request->gender ?? 'Not Specified', // Set a default value
-        'skill' => implode(',', $request->skill ?? []),
+        'gender' => $request->gender, // Ensure gender is included
+        'skill' => implode(',', $request->skill ?? []), // Convert skill array to string
     ]);    
 
     return redirect()->route('students.index')->with('success', 'Student added successfully!');
 }
+
 
 
 }
