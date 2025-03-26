@@ -12,9 +12,13 @@ class StudentController extends Controller
         $students = Student::all(); // Correct variable name
         return view('students.index', compact('students')); // Now it matches
     }
-
-
-
+    public function up()
+    {
+        Schema::table('students', function (Blueprint $table) {
+            $table->string('gender')->nullable()->change(); // Allow NULL values
+        });
+    }
+    
     public function create()
     {
         return view('students.create'); // Correct path
