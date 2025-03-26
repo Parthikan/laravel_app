@@ -34,7 +34,7 @@ class StudentController extends Controller
             : null;
 
         // Insert data into database
-        Student::create([
+        Students::create([
             'name' => $validatedData['name'],
             'department' => $validatedData['department'],
             'gender' => $validatedData['gender'],
