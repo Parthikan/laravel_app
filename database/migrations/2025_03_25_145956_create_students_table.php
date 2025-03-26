@@ -13,9 +13,10 @@ return new class extends Migration {
             $table->string('department');
             $table->string('gender');
             $table->text('skill')->nullable();
-            $table->timestamps(); // This creates 'created_at' and 'updated_at'
+            $table->timestamps(); // This line creates `created_at` and `updated_at`
         });
     }
+    
 
     public function down()
     {
