@@ -1,53 +1,36 @@
-<div class="container mt-4">
-    <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white">
-            <h4>{{ isset($student) ? 'Edit Student' : 'Add Student' }}</h4>
+@extends('layouts.app')
+
+@section('content')
+<div class="container mt-5">
+    <h2>Add Student</h2>
+    <form action="{{ route('students.store') }}" method="POST">
+        @csrf
+        <div class="mb-3">
+            <label class="form-label">Name:</label>
+            <input type="text" name="name" class="form-control" placeholder="Enter your name" required>
         </div>
-        <div class="card-body">
-            <form action="{{ isset($student) ? route('students.update', $student->id) : route('students.store') }}" method="POST">
-                @csrf
-                @if(isset($student))
-                    @method('PUT')
-                @endif
-
-                <div class="mb-3">
-                    <label for="name" class="form-label">Name:</label>
-                    <input type="text" id="name" name="name" class="form-control" value="{{ old('name', $student->name ?? '') }}" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="department" class="form-label">Department:</label>
-                    <input type="text" id="department" name="department" class="form-control" value="{{ old('department', $student->department ?? '') }}" required>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Gender:</label>
-                    <div class="d-flex gap-3">
-                        @foreach(['Male', 'Female', 'Other'] as $gender)
-                            <div class="form-check">
-                                <input type="radio" id="gender_{{ $gender }}" name="gender" value="{{ $gender }}" class="form-check-input" {{ old('gender', $student->gender ?? '') == $gender ? 'checked' : '' }} required>
-                                <label for="gender_{{ $gender }}" class="form-check-label">{{ $gender }}</label>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Skills:</label>
-                    <div class="d-flex gap-3">
-                        @foreach(['PHP', 'Laravel', 'JavaScript', 'MySQL'] as $skill)
-                            <div class="form-check">
-                                <input type="checkbox" id="skill_{{ $skill }}" name="skills[]" value="{{ $skill }}" class="form-check-input" {{ in_array($skill, old('skills', $student->skills ?? [])) ? 'checked' : '' }}>
-                                <label for="skill_{{ $skill }}" class="form-check-label">{{ $skill }}</label>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-
-                <div class="text-end">
-                    <button type="submit" class="btn btn-success">{{ isset($student) ? 'Update' : 'Submit' }}</button>
-                </div>
-            </form>
+        <div class="mb-3">
+            <label class="form-label">Department:</label>
+            <input type="text" name="department" class="form-control" placeholder="Enter department" required>
         </div>
-    </div>
+        <div class="mb-3">
+            <label class="form-label">Gender:</label>
+            <div>
+                <input type="radio" name="gender" value="Male" required> Male
+                <input type="radio" name="gender" value="Female" required> Female
+                <input type="radio" name="gender" value="Other" required> Other
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Skills:</label>
+            <div>
+                <input type="checkbox" name="skills[]" value="PHP"> PHP
+                <input type="checkbox" name="skills[]" value="Laravel"> Laravel
+                <input type="checkbox" name="skills[]" value="JavaScript"> JavaScript
+                <input type="checkbox" name="skills[]" value="MySQL"> MySQL
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 </div>
+@endsection
