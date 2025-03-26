@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Student; // Ensure correct namespace
+use App\Models\Student;
 
 class StudentController extends Controller
 {
@@ -25,25 +25,28 @@ class StudentController extends Controller
             'name' => 'required|string|max:255',
             'department' => 'required|string|max:255',
             'gender' => 'required|string',
-            'skill' => 'nullable|array', // Accepts array or null
+            'skill' => 'nullable|array', // Accept array or null
         ]);
 
-        // Convert skill array to string (if not empty)
+        // Convert skill array to string
         $validatedData['skill'] = isset($validatedData['skill']) 
             ? implode(',', $validatedData['skill']) 
             : null;
 
-        // Create a new student record
-        Student::create($validatedData);
+        // Insert data into database
+        Student::create([
+            'name' => $validatedData['name'],
+            'department' => $validatedData['department'],
+            'gender' => $validatedData['gender'],
+            'skill' => $validatedData['skill']
+        ]);
 
-        // Redirect with success message
         return redirect()->route('students.index')->with('success', 'Student added successfully!');
     }
 
-
     public function edit($id)
     {
-        $student = Student::findOrFail($id); 
+        $student = Student::findOrFail($id);
         return view('students.edit', compact('student'));
     }
 
@@ -52,19 +55,24 @@ class StudentController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'department' => 'required|string|max:255',
-            'gender' => 'required',
+            'gender' => 'required|string',
             'skill' => 'nullable|array',
         ]);
 
         $student = Student::findOrFail($id);
+
+        // Convert skill array to string
+        $skill = isset($request->skill) ? implode(',', $request->skill) : null;
+
+        // Update student data
         $student->update([
-            'name' => $request->input('name'),
-            'department' => $request->input('department'),
-            'gender' => $request->input('gender'),
-            'skill' => implode(',', $request->input('skill', [])),
+            'name' => $request->name,
+            'department' => $request->department,
+            'gender' => $request->gender,
+            'skill' => $skill
         ]);
 
-        return redirect()->route('students.index')->with('success', 'Student updated successfully');
+        return redirect()->route('students.index')->with('success', 'Student updated successfully!');
     }
 
     public function destroy($id)
