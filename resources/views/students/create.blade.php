@@ -24,10 +24,11 @@
         <div class="mb-3">
             <label class="form-label">Skills:</label>
             <div>
-                <input type="checkbox" name="skills[]" value="PHP"> PHP
-                <input type="checkbox" name="skills[]" value="Laravel"> Laravel
-                <input type="checkbox" name="skills[]" value="JavaScript"> JavaScript
-                <input type="checkbox" name="skills[]" value="MySQL"> MySQL
+                <input type="checkbox" name="skill[]" value="PHP"> PHP
+                <input type="checkbox" name="skill[]" value="Laravel"> Laravel
+                <input type="checkbox" name="skill[]" value="JavaScript"> JavaScript
+                <input type="checkbox" name="skill[]" value="MySQL"> MySQL
+
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
