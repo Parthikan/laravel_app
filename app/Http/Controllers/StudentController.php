@@ -17,7 +17,7 @@ class StudentController extends Controller
     {
         return view('students.create');
     }
-
+    
     public function store(Request $request)
     {
         // Validate the request data
@@ -27,14 +27,14 @@ class StudentController extends Controller
             'gender' => 'required|string',
             'skill' => 'nullable|array', // Accept array or null
         ]);
-
+    
         // Convert skill array to string
-        $validatedData['skill'] = isset($validatedData['skill']) 
-            ? implode(',', $validatedData['skill']) 
-            : null;
-
-        // Insert data into database
-        students::create([
+        $validatedData['skill'] = isset($validatedData['skill'])
+        ? implode(',', $validatedData['skill'])
+        : null;
+    
+        // Insert data into the database
+        Student::create([
             'name' => $validatedData['name'],
             'department' => $validatedData['department'],
             'gender' => $validatedData['gender'],
@@ -42,7 +42,7 @@ class StudentController extends Controller
         ]);
 
         return redirect()->route('students.index')->with('success', 'Student added successfully!');
-    }
+    }    
 
     public function edit($id)
     {
