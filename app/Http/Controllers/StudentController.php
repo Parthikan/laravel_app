@@ -20,22 +20,26 @@ class StudentController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        // Validate the request data
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'department' => 'required|string|max:255',
-            'gender' => 'required',
-            'skill' => 'nullable|array', // Handle array input
+            'gender' => 'required|string',
+            'skill' => 'nullable|array', // Accepts array or null
         ]);
 
-        Student::create([
-            'name' => $request->input('name'),
-            'department' => $request->input('department'),
-            'gender' => $request->input('gender'),
-            'skill' => implode(',', $request->input('skill', [])), // Convert array to string
-        ]);
+        // Convert skill array to string (if not empty)
+        $validatedData['skill'] = isset($validatedData['skill']) 
+            ? implode(',', $validatedData['skill']) 
+            : null;
 
+        // Create a new student record
+        Student::create($validatedData);
+
+        // Redirect with success message
         return redirect()->route('students.index')->with('success', 'Student added successfully!');
     }
+
 
     public function edit($id)
     {
