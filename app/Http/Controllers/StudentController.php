@@ -9,9 +9,10 @@ class StudentController extends Controller
 {
     public function index()
     {
-        $student = Student::all();
-        return view('students.index', compact('students'));
+        $students = Student::all(); // Correct variable name
+        return view('students.index', compact('students')); // Now it matches
     }
+
 
 
     public function create()
@@ -63,18 +64,19 @@ public function store(Request $request)
     $request->validate([
         'name' => 'required|string|max:255',
         'department' => 'required|string|max:255',
-        'gender' => 'required',
+        'gender' => 'required', // Ensure this is present
         'skill' => 'nullable|array',
     ]);
 
     Student::create([
         'name' => $request->name,
         'department' => $request->department,
-        'gender' => $request->gender,
-        'skill' => implode(',', $request->skill ?? []), // Convert array to string
+        'gender' => $request->gender ?? 'Not Specified', // Set a default value
+        'skill' => implode(',', $request->skill ?? []),
     ]);    
 
     return redirect()->route('students.index')->with('success', 'Student added successfully!');
 }
+
 
 }
