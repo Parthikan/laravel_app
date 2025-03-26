@@ -1,6 +1,11 @@
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
 class Student extends Model
 {
-    public $timestamps = false; // Disable auto timestamps
+    use HasFactory;
 
-    protected $fillable = ['name', 'department', 'gender', 'skill']; // Ensure gender and skill are fillable
+    protected $fillable = ['name', 'department', 'gender', 'skill'];
 }
