@@ -6,21 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up()
-    {
-        Schema::create('students', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('department');
-            $table->string('gender');
-            $table->text('skill')->nullable();
-            $table->timestamps(); // This line creates `created_at` and `updated_at`
-        });
-    }
-    
+{
+    Schema::table('students', function (Blueprint $table) {
+        $table->timestamps();
+    });
+}
 
-    public function down()
-    {
-        Schema::dropIfExists('students');
-    }
+public function down()
+{
+    Schema::table('students', function (Blueprint $table) {
+        $table->dropTimestamps();
+    });
+}
+
 };
 
