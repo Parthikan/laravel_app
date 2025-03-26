@@ -1,13 +1,6 @@
-<?php
-
-namespace App\Models;
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
 class Student extends Model
 {
-    use HasFactory;
+    public $timestamps = false; // Disable auto timestamps
 
-    protected $fillable = ['name', 'department', 'mobile']; // Allow mass assignment
+    protected $fillable = ['name', 'department', 'gender', 'skill']; // Ensure gender and skill are fillable
 }
